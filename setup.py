@@ -8,7 +8,8 @@ install_requires = [
     "elasticsearch==8.10.0",
     "flask==3.0.0",
     "flask-socketio==5.3.6",
-    "pytest==7.4.2"
+    "pytest==7.4.2",
+    "kazoo==2.9.0"
 ]
 
 setup(
