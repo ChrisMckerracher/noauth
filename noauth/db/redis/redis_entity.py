@@ -3,7 +3,7 @@ from redis.client import Redis
 
 from noauth.db.redis.redis_query import RedisQuery
 
-ExcludeFields =["key", "index"]
+ExcludeFields = ["key", "index"]
 
 
 class RedisEntity(BaseModel):

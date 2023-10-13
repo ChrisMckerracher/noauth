@@ -1,21 +1,32 @@
 from redis import Redis
 import os
 
-from noauth.zk_cache.zk_cache import ZKCache
+from noauth.zk.zk_cache import ZKCache
 
-mode = None
-zk_cache = None
+zk_cache_host = None
 zk_node = None
-zk_cache_host = ZKCache[str](zk_node=zk_node)
+zk_cache = None
+
+def get_zk_cache_host():
+    global zk_cache
+    global zk_node
+    global zk_cache_host
+
+    mode = None
+
+    if not zk_cache_host:
+        zk_cache_host = ZKCache(zk_node=zk_node)
+
+    return zk_cache_host
 
 
 def get_host():
     global mode
     # PROD or DEV
-    mode = os.environ['MODE']
+    mode = os.getenv('MODE', default="DEV")
 
-    if mode is "PROD":
-        return zk_cache_host.get()
+    if mode == "PROD":
+        return get_zk_cache_host().get()
     else:
         return 'localhost'
 

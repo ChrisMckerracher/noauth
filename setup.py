@@ -13,7 +13,7 @@ install_requires = [
 setup(
     name='noauth',
     version='0.1.0',
-    packages=find_packages(),
+    packages=find_packages(exclude=['tests', 'tests.*']),
     install_requires=install_requires,
     tests_require=[
         'pytest',
