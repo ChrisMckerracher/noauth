@@ -7,7 +7,8 @@ install_requires = [
     "pydantic_core==2.10.1",
     "elasticsearch==8.10.0",
     "flask==3.0.0",
-    "flask-socketio==5.3.6"
+    "flask-socketio==5.3.6",
+    "pytest==7.4.2"
 ]
 
 setup(
