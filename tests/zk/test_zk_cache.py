@@ -10,7 +10,6 @@ class TestZKCache(unittest.TestCase):
     @patch('noauth.zk.zk_cache.KazooClient', autospec=True)
     def test_get_method(self, mock_class):
         node = "/test/node"
-
         expected_val = "value"
 
         mock_client = mock_class.return_value
