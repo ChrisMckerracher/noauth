@@ -6,11 +6,11 @@ from typing import TypeVar
 from kazoo.client import KazooClient
 from pydantic import BaseModel
 
-
-#ToDo: use this later if we have a need to use cache beyond strings
+# ToDo: use this later if we have a need to use cache beyond strings
 T = TypeVar("T", bound=any)
 
 logger = logging.Logger(name=__name__, level="DEBUG")
+
 
 # zookeeper cache
 class ZKCache(BaseModel):
@@ -36,8 +36,8 @@ class ZKCache(BaseModel):
             except Exception as e:
                 logger.error(f"Unable to connect to ZK: {e}")
 
-            #We can do this more graciously, but for now the 'backoff' of a ZK error is the entire time delta
-            #We could do an exponential backoff that increases at max timedelta but it feels overengineered
+            # We can do this more graciously, but for now the 'backoff' of a ZK error is the entire time delta
+            # We could do an exponential backoff that increases at max timedelta but it feels overengineered
             self.time = now
             self.value = node
 
