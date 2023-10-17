@@ -9,6 +9,7 @@ from pathlib import Path
 class TestEsCacheRepository(unittest.TestCase):
 
     def setUp(self):
+        self.wt = "wt"
 
         self.test_id = "test_id"
         self.expected_index = MockRedisEntity.model_fields['index'].default
@@ -18,7 +19,7 @@ class TestEsCacheRepository(unittest.TestCase):
         self.path = str(Path(__file__).parent.absolute())
 
     def test_get_with_cached_value(self):
-
+        print(self.wt)
         expected = MockRedisEntity(id=self.test_id)
         query = Mock()
 
