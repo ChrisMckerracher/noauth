@@ -3,6 +3,7 @@ name: Create Release
 on:
   workflow_run:
     workflows: ["Build"]
+    branches: [main]
     types:
       - completed
 #ToDo: self implementation ?
