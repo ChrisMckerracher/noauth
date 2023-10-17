@@ -1,0 +1,11 @@
+{
+  "_index": "user",
+  "_type": "_doc",
+  "_id": "test",
+  "_version": 6,
+  "_seq_no": 5,
+  "_primary_term": 1,
+  "found": true,
+  "_source": {
+  }
+}
