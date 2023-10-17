@@ -9,6 +9,7 @@ from pathlib import Path
 class TestEsCacheRepository(unittest.TestCase):
 
     def setUp(self):
+
         self.test_id = "test_id"
         self.expected_index = MockRedisEntity.model_fields['index'].default
         self.es = Mock()
