@@ -1,6 +1,6 @@
 from typing import TypeVar, Generic, Optional, get_args
 
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch, ApiError
 from redis.client import Redis
 
 from noauth.db.es.es_repository import EsRepository
@@ -33,7 +33,11 @@ class EsCacheRepository(EsRepository, Generic[T]):
         return val
 
     def load(self, id: str) -> Optional[T]:
-        response = self.es.get(index=self.index, id=id)
+        response = None
+        try:
+            response = self.es.get(index=self.index, id=id)
+        except ApiError as e:
+            logger.error(f"Experienced error {e} when trying to get id={id} from index={self.index}")
 
         if not response or not response["found"]:
             return None
