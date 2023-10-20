@@ -1,6 +1,9 @@
 import unittest
 from unittest.mock import patch, Mock
 
+from elastic_transport import ApiResponseMeta
+from elasticsearch import NotFoundError
+
 from noauth.db.es.es_cache_repository import EsCacheRepository
 from tests.db.redis.mock_redis import MockRedisEntity
 from tests.util.jsons import load_and_modify
@@ -44,6 +47,7 @@ class TestEsCacheRepository(unittest.TestCase):
 
             self.assertEqual(self.sit.get(self.test_id), expected)
 
+    #Since es returns NotFound error I think this is pointless
     def test_get_with_uncached_value_not_in_es(self):
         test_id = "test_id"
         expected_index = MockRedisEntity.model_fields['index'].default
@@ -60,5 +64,19 @@ class TestEsCacheRepository(unittest.TestCase):
 
             self.assertEqual(self.sit.get(test_id), expected)
 
-    #ToDo: ES may throw an exception still and we don't ahndle this
+    def test_get_with_uncached_value_not_in_es(self):
+        test_id = "test_id"
+        expected = None
+        query = Mock()
+
+        with patch("tests.db.redis.mock_redis.MockRedisQuery") as class_mock:
+            class_mock.return_value = query
+            query.get = lambda x: None
+
+            self.es.get = lambda index=None, id=None: (_ for _ in ()).throw(NotFoundError(message="testMessage",
+                        meta=ApiResponseMeta(status=500, http_version="N/A", headers=None, duration=1, node=None),
+                        body=None))
+
+            self.assertEqual(self.sit.get(test_id), expected)
+
 
